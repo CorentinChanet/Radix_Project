@@ -91,3 +91,5 @@ str1 = ''.join(str(e) for e in nospaces)
 #print(str1)
 #result = re.search("Names: (.*)ID", )
 #print("Coucou "+result.group(1))
+
+
