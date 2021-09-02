@@ -1,6 +1,6 @@
 from pdf2image import convert_from_path
 
-pdfs = "../pdf/119.pdf"
+pdfs = "../pdf/1.pdf"
 pages = convert_from_path(pdfs, 350)
 
 i = 1
@@ -14,7 +14,7 @@ import cv2
 from PIL import Image
 
 
-def mark_region(image_path):
+"""def mark_region(image_path):
 
     im = cv2.imread(image_path)
 
@@ -44,7 +44,7 @@ def mark_region(image_path):
         count+=1
 
         if y >= 200 and x <= 1000:
-            if area > 100:
+            if area > 10000:
                 image = cv2.rectangle(im, (x,y), (x+w, y+h), color=(2,0,255), thickness=10)
                 line_items_coordinates.append([(x,y), (2200, y+h)])
 
@@ -58,5 +58,5 @@ def mark_region(image_path):
 
 image = Image.fromarray(mark_region('Page_1.jpg')[0])
 
-image.show()
+image.show()"""
 #mark_region('Page_1.jpg')
