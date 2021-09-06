@@ -7,15 +7,23 @@
 # else:
 #     ssl._create_default_https_context = _create_unverified_https_context
 
-from pdfminer.high_level import extract_text
-# from flair.data import Sentence
-# from flair.models import SequenceTagger
+import time
+
+start = time.time()
+
+from parsing.extraction import parsing_documents, RegxSections, RegxInfos, create_corpus
+from matching.tf_idf_embeddings import tf_idf_func
+from sklearn.metrics.pairwise import linear_kernel
 import re
 
+documents = parsing_documents(3266, RegxSections, RegxInfos)
 
-def extract_text_from_pdf(pdf_path):
-    return extract_text(pdf_path)
+corpus = create_corpus(documents)
 
+tf_idf_corpus = tf_idf_func(corpus)
 
-raw_text = extract_text_from_pdf('../curriculum_vitae_data/pdf/133.pdf')
-split_text = re.split('\n', raw_text)
+cosine_similarities = linear_kernel(tf_idf_corpus['work_exp_matrix'][24:25], tf_idf_corpus['work_exp_matrix']).flatten()
+indices = cosine_similarities.argsort()[:-5:-1]
+
+print(time.time()-start)
+#print(sorted(list(results[24]['education'].items()), key=lambda x: x[1]))
