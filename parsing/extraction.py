@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from flair_ner import _extract_persons, _extract_edu
+# from flair_ner import _extract_persons, _extract_edu
 #tagger = joblib.load("../NLP-resume/processing/ner_onto_large.pkl")
 
 class RegxSections(Enum):
