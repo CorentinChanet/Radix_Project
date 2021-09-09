@@ -1,6 +1,8 @@
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+def vectorizer_document(sections:dict, analyzer):
+    pass
 
 def tf_idf_func(corpus:dict, analyzer:str) -> dict:
 
@@ -13,7 +15,7 @@ def tf_idf_func(corpus:dict, analyzer:str) -> dict:
         if analyzer == 'char_wb':
             vectorizer = TfidfVectorizer(analyzer='char_wb', ngram_range=(1,4), min_df=0.01, max_df=0.5, sublinear_tf=True)
         elif analyzer == 'char':
-            vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 6), min_df=0.01, max_df=0.5, sublinear_tf=True)
+            vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 3), min_df=0.01, max_df=0.5, sublinear_tf=True)
         elif analyzer == 'word':
             vectorizer = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.01, max_df=0.5, sublinear_tf=True)
         else:

@@ -28,7 +28,6 @@ def _extract_persons(text, tagger):
 def _extract_edu(section, tagger):
 
     edu = []
-    dates = []
 
     for sent in section:
 

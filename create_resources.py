@@ -21,13 +21,13 @@ from Radix_Project.utils.json_encoder import NpEncoder
 
 documents = parsing_documents(3266, RegxSections, RegxInfos)
 
-corpus = joblib.load('resources/corpus.pkl')
+#corpus = joblib.load('resources/corpus.pkl')
 
 # tf_idf_corpus_char = tf_idf_func(corpus, 'char')
 # tf_idf_corpus_char_wb = tf_idf_func(corpus, 'char_wb')
-tf_idf_corpus_word = tf_idf_func(corpus, 'word')
+# tf_idf_corpus_word = tf_idf_func(corpus, 'word')
 
-joblib.dump(tf_idf_corpus_word, 'resources/tf_idf_corpus_word.pkl')
+joblib.dump(documents, 'resources/documents.pkl')
 print("Finished vectorization")
 
 # sections_list = ['work_exp']
