@@ -27,8 +27,9 @@ def _extract_persons(text, tagger):
 
     return names
 
-def _extract_work(section, tagger):
+def _extract_edu(section, tagger):
 
+    edu = []
     dates = []
 
     for sent in section:
@@ -37,22 +38,21 @@ def _extract_work(section, tagger):
 
         tagger.predict(sentence)
 
-
-        date_parts = []
+        edu_parts = []
 
         chunks = sentence.to_tagged_string().split()
 
         for i, chunk in enumerate(chunks):
-            if '<S-DATE>' in chunk:
-                dates.append(chunks[i - 1])
-            elif '<B-DATE>' in chunk or '<M-DATE>' in chunk:
-                date_parts.append(chunks[i-1])
-            elif '<E-DATE>' in chunk:
-                date_parts.append(chunks[i - 1])
-                dates.append(" ".join(date_parts))
-                date_parts = []
+            if '<S-ORG>' in chunk or '<S-DATE>' in chunk:
+                edu.append((chunks[i - 1], chunks[i]))
+            elif '<B-ORG>' in chunk or '<M-ORG>' in chunk or ('<B-DATE>' in chunk or '<M-DATE>' in chunk):
+                edu_parts.append((chunks[i-1], chunks[i]))
+            elif '<E-DATE>' in chunk or '<E-ORG>' in chunk:
+                edu_parts.append(chunks[i - 1])
+                edu.append((" ".join(edu_parts), chunks[i]))
+                edu_parts = []
 
-    return dates
+    return (edu, dates)
 
 
 # str(sentence.to_dict(tag_type='ner')['entities'][0]['labels'][0]).split()

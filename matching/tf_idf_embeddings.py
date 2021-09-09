@@ -1,12 +1,50 @@
-import time
 import re
-from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import euclidean_distances
 
 
+def tf_idf_func(corpus:dict, analyzer:str) -> dict:
 
-def tf_idf_func(corpus:dict) -> dict:
+    deep_copy = corpus.copy()
+
+    filtered_corpus = {}
+
+    for section, content in deep_copy.items():
+
+        if analyzer == 'char_wb':
+            vectorizer = TfidfVectorizer(analyzer='char_wb', ngram_range=(1,4), min_df=0.01, max_df=0.5, sublinear_tf=True)
+        elif analyzer == 'char':
+            vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 6), min_df=0.01, max_df=0.5, sublinear_tf=True)
+        elif analyzer == 'word':
+            vectorizer = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.01, max_df=0.5, sublinear_tf=True)
+        else:
+            raise ValueError("Analyzer not recognized")
+
+        filtered_content = []
+
+        for text in content:
+            filtered_text = " ".join([word.strip() if word.strip() not in stop_words else "" for word in text.split()])
+            digits = r'[aA-zZ]*\d+[aA-zZ]*'
+            months = r' jan | january| feb | february| mar | march | april| jun | june| july| jul | aug | august| sep | september| oct | october| nov | november| dec | december'
+            filtered_text = re.sub(digits, "", filtered_text.lower())
+            filtered_text = re.sub(months, "", filtered_text.lower())
+            filtered_content.append(" ".join(filtered_text.split()))
+
+        filtered_corpus[section] = filtered_content
+
+        filtered_corpus[f'{section}_model'] = vectorizer
+
+        try:
+            vectorizer.fit(filtered_content)
+            filtered_corpus[f'{section}_matrix'] = vectorizer.transform(filtered_content)
+
+        except ValueError:
+            filtered_corpus[f'{section}_matrix'] = []
+            print(f"Empty vocabulary, probably because the entire corpus is missing a section [{section}]; empty list set as value for [{section}]")
+
+    return filtered_corpus
+
+
+def tf_idf_func_combi(corpus:dict) -> dict:
 
 
     #vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1,4), sublinear_tf=True)
@@ -43,8 +81,6 @@ def tf_idf_func(corpus:dict) -> dict:
             print(f"Empty vocabulary, probably because the entire corpus is missing a section [{combination}]; empty list set as value for [{combination}]")
 
     return filtered_corpus
-
-
 
 # Source : https://gist.github.com/sebleier/554280
 stop_words = {"0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "able", "about",

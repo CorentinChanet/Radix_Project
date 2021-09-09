@@ -2,11 +2,11 @@ import time
 import re
 from enum import Enum
 import joblib
-from parsing.flair_ner import _extract_persons, _extract_work
+from parsing.flair_ner import _extract_persons, _extract_edu
 import pandas as pd
 from itertools import combinations
 
-#tagger = joblib.load("../../NLP-resume/processing/ner_onto_large.pkl")
+#tagger = joblib.load("../NLP-resume/processing/ner_onto_large.pkl")
 
 class RegxSections(Enum):
     work_exp = r'((teaching|exp.{3,4}nce|employment|work|working|career|job.?|professional|organizational|industr.{1,3}|previous.{0,2}|present.{0,2}|current.{0,2}|detail.{0,2})' \
@@ -48,7 +48,6 @@ def _get_infos(text, regexes):
         matches = re.findall(pattern.value, text.lower())
         if matches:
             infos[pattern.name] = list(dict.fromkeys(matches)) # Removes any duplicate
-    #infos['name'] = _extract_persons(text, tagger)
 
     return infos
 
@@ -68,8 +67,10 @@ def parsing_documents(n, Sections, Infos):
 
         documents[i]['sections'] = _get_sections(txt, Sections)
         documents[i]['infos'] = _get_infos(txt, Infos)
-
-
+        #if documents[i]['sections']['education']:
+        #    documents[i]['infos']['curriculum'] = _extract_edu(documents[i]['sections']['education'], tagger)
+        #documents[i]['infos']['name'] = _extract_persons(txt, tagger)
+    print('All documents parsed')
     return documents
 
 def create_corpus(documents:dict):
