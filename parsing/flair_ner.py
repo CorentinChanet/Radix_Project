@@ -1,6 +1,4 @@
 from flair.data import Sentence
-import joblib
-
 
 def _extract_persons(text, tagger):
 
@@ -53,6 +51,3 @@ def _extract_edu(section, tagger):
                 edu_parts = []
 
     return (edu, dates)
-
-
-# str(sentence.to_dict(tag_type='ner')['entities'][0]['labels'][0]).split()

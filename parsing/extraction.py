@@ -1,10 +1,6 @@
-import time
 import re
 from enum import Enum
-import joblib
 from parsing.flair_ner import _extract_persons, _extract_edu
-import pandas as pd
-from itertools import combinations
 
 #tagger = joblib.load("../NLP-resume/processing/ner_onto_large.pkl")
 
@@ -43,7 +39,6 @@ def _get_sections(text, regexes):
 
 def _get_infos(text, regexes):
     infos = {pattern.name:[] for pattern in regexes}
-    split_text = re.split('\n', text)
     for pattern in regexes:
         matches = re.findall(pattern.value, text.lower())
         if matches:
@@ -88,33 +83,3 @@ def create_corpus(documents:dict):
                 corpus[pattern.name].append("")
 
     return corpus
-
-def create_corpus_combinations(documents:dict):
-
-    combinations_list = []
-    sections_names = [pattern.name for pattern in RegxSections]
-
-    for i in range(1,5,1):
-        combinations_list.extend(list(combinations([pattern for pattern in sections_names[:4]], i)))
-
-    corpus = {"+".join(combination):[] for combination in combinations_list}
-    print(combinations_list)
-    for combination in combinations_list:
-        print(f"Combination {combination} is being processed")
-        for i in range(1,len(documents)+1,1):
-            if documents[i]:
-                content = []
-                for section in combination:
-                    content.extend(documents[i]['sections'][section])
-                if content:
-                    text = " ".join(content)
-                    corpus["+".join(combination)].append(text)
-                else:
-                    corpus["+".join(combination)].append("")
-            else:
-                for combination_name in corpus.keys():
-                    corpus[combination_name].append("")
-
-    return corpus
-
-#joblib.dump(documents, "documents.pkl")

@@ -1,6 +1,5 @@
 import fitz
 import re
-import os
 
 
 for i in range(1, 3267, 1):

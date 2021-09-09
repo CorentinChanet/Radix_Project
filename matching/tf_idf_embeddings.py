@@ -43,45 +43,6 @@ def tf_idf_func(corpus:dict, analyzer:str) -> dict:
 
     return filtered_corpus
 
-
-def tf_idf_func_combi(corpus:dict) -> dict:
-
-
-    #vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1,4), sublinear_tf=True)
-    #vectorizer = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.01, max_df=0.5, sublinear_tf=True)
-
-    deep_copy = corpus.copy()
-
-    filtered_corpus = {}
-
-    for combination, content in deep_copy.items():
-
-        vectorizer = TfidfVectorizer(analyzer='char_wb', ngram_range=(1, 4), sublinear_tf=True)
-
-        filtered_content = []
-
-        for text in content:
-            filtered_text = " ".join([word.strip() if word.strip() not in stop_words else "" for word in text.split()])
-            digits = r'[aA-zZ]*\d+[aA-zZ]*'
-            months = r' jan | january| feb | february| mar | march | april| jun | june| july| jul | aug | august| sep | september| oct | october| nov | november| dec | december'
-            filtered_text = re.sub(digits, "", filtered_text.lower())
-            filtered_text = re.sub(months, "", filtered_text.lower())
-            filtered_content.append(" ".join(filtered_text.split()))
-
-        filtered_corpus[combination] = filtered_content
-
-        filtered_corpus[f'{combination}_model'] = vectorizer
-
-        try:
-            vectorizer.fit(filtered_content)
-            filtered_corpus[f'{combination}_matrix'] = vectorizer.transform(filtered_content)
-
-        except ValueError:
-            filtered_corpus[f'{combination}_matrix'] = []
-            print(f"Empty vocabulary, probably because the entire corpus is missing a section [{combination}]; empty list set as value for [{combination}]")
-
-    return filtered_corpus
-
 # Source : https://gist.github.com/sebleier/554280
 stop_words = {"0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "able", "about",
               "above", "abst", "ac", "accordance", "according", "accordingly", "across", "act", "actually",
