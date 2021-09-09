@@ -59,6 +59,6 @@ for section in sections_list:
     print(f'{section} section pickled')
 
 joblib.dump(documents, 'documents.pkl')
-joblib.dump(corpus, '../corpus.pkl')
+joblib.dump(corpus, 'corpus.pkl')
 
 print(time.time()-start)
