@@ -1,6 +1,6 @@
 from pdf2image import convert_from_path
 
-pdfs = "../pdf/1.pdf"
+pdfs = "../pdf/2.pdf"
 pages = convert_from_path(pdfs, 350)
 
 i = 1
