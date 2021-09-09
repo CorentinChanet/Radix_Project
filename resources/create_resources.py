@@ -11,12 +11,13 @@ import time
 
 start = time.time()
 
-from parsing.extraction import parsing_documents, RegxSections, RegxInfos, create_corpus
-from matching.tf_idf_embeddings import tf_idf_func
+from ..parsing.extraction import parsing_documents, RegxSections, RegxInfos, create_corpus
+from ..parsing.flair_ner import _extract_persons, _extract_edu
+from ..matching.tf_idf_embeddings import tf_idf_func
 from sklearn.metrics.pairwise import linear_kernel
 import joblib
 import json
-from utils.json_encoder import NpEncoder
+from ..utils.json_encoder import NpEncoder
 
 documents = parsing_documents(3266, RegxSections, RegxInfos)
 
@@ -58,6 +59,6 @@ for section in sections_list:
     print(f'{section} section pickled')
 
 joblib.dump(documents, 'documents.pkl')
-joblib.dump(corpus, 'corpus.pkl')
+joblib.dump(corpus, '../corpus.pkl')
 
 print(time.time()-start)
