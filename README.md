@@ -19,8 +19,8 @@ Radix Project</h3>
 [Output](#Output)  
 [How it works](#How-it-works)  
 [Examples](#Examples)  
-[Authors](#Authors)
-[Language and Tools](#Language-and-tools)
+[Authors](#Authors) 
+
 
 ## Description
 
