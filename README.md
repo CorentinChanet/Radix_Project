@@ -66,15 +66,17 @@ There is three part:
 
 
 ## Examples
+
 **Extraction Information**
-<img width = '2000' scr = /images/extr.gif>
+<img width = '2000' src = /images/extr.gif>
 
 **Resume Matching**
-<img width = '2000' scr = ''>
+<img width = '2000' src = /images/Matching.gif>
 
 
 **Resume Matching with upload file**
 <img width = '2000' scr = ''>
+
 
 ## Authors
 
