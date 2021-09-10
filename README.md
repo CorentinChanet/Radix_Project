@@ -2,7 +2,7 @@
   
   <h3>Becode AI training
 
-group assignment: Radix Project</h3>
+Radix Project</h3>
 
 
 <img width = "200" src = https://becode.org/app/uploads/2020/03/cropped-becode-logo-seal.png>
