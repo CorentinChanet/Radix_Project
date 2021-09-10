@@ -11,6 +11,20 @@ st.set_page_config(layout="wide")
 expander_extracting = st.expander("Information Extraction", expanded=False)
 
 
+scores = {
+    0: "1st",
+    1: "2nd",
+    2: "3rd",
+    3: "4th",
+    4: "5th",
+    5: "6th",
+    6: "7th",
+    7: "8th",
+    8: "9th",
+    9: "10th"
+}
+
+
 with expander_extracting:
 
     documents = joblib.load("resources/documents_full_v3.pkl")
@@ -100,10 +114,13 @@ with expander_matching:
             cosine_similarities = linear_kernel(tf_idf_corpus[f'{section}_matrix'][document_number-1], tf_idf_corpus[f'{section}_matrix']).flatten()
             ranking = cosine_similarities.argsort()[:-12:-1][1:] + 1
 
+            em_1_left.subheader('Ranking')
             em_1_left.write(list(ranking))
 
+            em_1_center.subheader('Original')
             em_1_center.write(documents[document_number]['sections'][section])
 
+            em_1_right.subheader(f'{scores[slider]} best match')
             em_1_right.write(documents[ranking[slider]]['sections'][section])
 
         else:
@@ -137,9 +154,10 @@ with expander_matching_external:
             doc = convert_single(uploaded_pdf)
             parsed_doc = parse_single_document(doc, RegxSections, RegxInfos)
 
+            em_1_center.subheader('Uploaded file')
             em_1_center.write(parsed_doc[section_ext])
 
-            slider_ext = em_0_center.slider("Choose which resume to compare", min_value=0, max_value=9, value=0)
+            slider_ext = em_0_center.slider("Choose which resume to compare", min_value=0, max_value=9, value=0, key="slider_ext")
 
             try:
                 vectorized_doc = vectorizer_document(parsed_doc, tf_idf_corpus=tf_idf_corpus)
@@ -149,8 +167,10 @@ with expander_matching_external:
 
                 ranking = cosine_similarities.argsort()[:-11:-1] + 1
 
+                em_1_left.subheader('Ranking')
                 em_1_left.write(list(ranking))
 
+                em_1_right.subheader(f'{scores[slider_ext]}th best match')
                 em_1_right.write(documents[ranking[slider_ext]]['sections'][section_ext])
 
             except ValueError:
