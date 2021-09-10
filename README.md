@@ -29,7 +29,7 @@ BLABLBLA
 Here you can Download the PDF and DOCX files : https://github.com/arefinnomi/curriculum_vitae_data
 1. Clone the repository:
 ```
-git clone https://github.com/harozudu/3D_houses/tree/main
+git clone https://github.com/Misterkadrix/Radix_Project.git
 ``` 
 2. Install the required libraries:
 ```
