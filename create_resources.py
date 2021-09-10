@@ -12,7 +12,6 @@ import time
 start = time.time()
 
 from Radix_Project.parsing.extraction import parsing_documents, RegxSections, RegxInfos, create_corpus
-from Radix_Project.parsing.flair_ner import _extract_persons, _extract_edu
 from Radix_Project.matching.tf_idf_embeddings import tf_idf_func
 from sklearn.metrics.pairwise import linear_kernel
 import joblib
@@ -27,7 +26,7 @@ documents = parsing_documents(3266, RegxSections, RegxInfos)
 # tf_idf_corpus_char_wb = tf_idf_func(corpus, 'char_wb')
 # tf_idf_corpus_word = tf_idf_func(corpus, 'word')
 
-joblib.dump(documents, 'resources/documents.pkl')
+joblib.dump(documents, 'resources/documents_full_v2.pkl')
 print("Finished vectorization")
 
 # sections_list = ['work_exp']
