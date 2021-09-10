@@ -14,6 +14,7 @@ expander_extracting = st.expander("Information Extraction", expanded=False)
 with expander_extracting:
 
     documents = joblib.load("resources/documents_full_v3.pkl")
+    documents_for_name = joblib.load("resources/documents_full_v2.pkl")
     documents_sample = joblib.load("resources/documents_sample_v2.pkl")
 
     ee_0_left, ee_0_center, ee_0_right = st.columns((0.1, 1, 2))
@@ -32,7 +33,7 @@ with expander_extracting:
     tickbox_4 = ee_0_box_4.checkbox('Curriculum [< 100]')
 
     if tickbox_1 and documents[doc_index]['infos']['name']:
-        ee_0_box_1.write(documents[doc_index]['infos']['name'])
+        ee_0_box_1.write(documents_for_name[doc_index]['infos']['name'])
 
     if tickbox_2 and documents[doc_index]['infos']['email_addresses']:
         ee_0_box_2.write([documents[doc_index]['infos']['email_addresses'][0]])
