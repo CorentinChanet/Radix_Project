@@ -32,7 +32,7 @@ with expander_extracting:
     tickbox_3 = ee_0_box_3.checkbox('Phone', value=False)
     tickbox_4 = ee_0_box_4.checkbox('Curriculum [< 100]')
 
-    if tickbox_1 and documents[doc_index]['infos']['name']:
+    if tickbox_1 and documents_for_name[doc_index]['infos']['name']:
         ee_0_box_1.write(documents_for_name[doc_index]['infos']['name'])
 
     if tickbox_2 and documents[doc_index]['infos']['email_addresses']:
