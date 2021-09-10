@@ -24,14 +24,21 @@ Radix Project</h3>
 
 ## Description
 
-We developed a program for Radix. The purpose of this project it's to use AI to help the recruitment. The AI will make the process more faster and easier.
-Examples: You need a specific employees working as engineer. The AI will passe every Resume he has.. and will show a Resume who looks the most as the one you need. 
+We developed a Minimum Viable Product (MVP) at the request of Radix. The purpose of this project is to use NLP technologies to process Curriculum Vitae. 
+In doing so, the end goal is to automate parts of the matching process between job seekers and job offers, and make it faster and easier.
 
-Also we use the Dataset from Kaagle. 
-Here you can Download the PDF and DOCX files : https://github.com/arefinnomi/curriculum_vitae_data 
+This application has 2 main features : 
+* **Information extraction**. The user must be able to extract relevant information for each resume from the data set.
+Some information are more difficult to extract than other, or more complex to format (such as the institution-year for the curriculum); 
+  therefore this feature could be further optimize <br></br>
+    
+* **Finding similar profiles**. The goal is to be able to compare section-by-section a given CV against a whole dataset, and display the 
+  10 most similar profiles, whether in terms of working experience, skills
+  or education.<br></br>
 
-Below you find the whole explanation, from the installation up to a glance behind the scenes.
+This MVP was developped with a selection of CV (.pdf) taken from : https://github.com/arefinnomi/curriculum_vitae_data 
 
+Below are additional informations regarding the installation and the use of this MVP
 
 ## Installation
 1. Clone the repository:
@@ -44,26 +51,22 @@ pip install [required library]
 ```
 
 ## Usage
-To start the program, you just need to go to the terminal and write this :
+To start the program on your local machine, you just need to go to the terminal and enter :
 ```
 streamlit run streamlit_app.py
 ```
 
 
-
-## Output
-
-There is three part:
-1. Information Extraction : It will extract the data from the resume as the Name,Emailn,etc..
-2. Resume Matching : It will make a match between the Resume we provide and the ones we got on our dataset
-3. Resume Mathcing : It will make a match between the Resume you provide (by a uploading way) and the ones we got on our dataset
-
-
-
 ## How it works
 
 
+The streamlit application is divided in 3 sections:
+1. Information Extraction : It will extract extract key features from the chosen resume from the dataset.
+2. Resume Matching (from dataset) : It will find matches between a resume from the dataset and the rest of the dataset
+3. Resume Matching (uploaded file) : It will find matches between an uploaded resume (only works with .pdf) and the dataset
 
+For every section you can either choose the features or the section of interest.
+Please keep in mind this application is not and end-product. It should however be stable and handle out-of-range values, wrong file extensions etc.
 
 ## Examples
 
