@@ -45,9 +45,15 @@ To start the program, you just need to go to the terminal and write this :
 ```
 streamlit run streamlit_app.py
 ```
-partis à continuer
+
+
 
 ## Output
+
+There is three part:
+1. It will extract the data from the resume
+2. It will make a match between the Resume we provide and the ones we got on our dataset
+3. It will make a match between the Resume you provide (by a uploading way) and the ones we got on our dataset
 
 
 
