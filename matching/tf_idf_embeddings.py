@@ -1,6 +1,33 @@
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+def vectorizer_document(sections:dict, tf_idf_corpus):
+
+    vectorized_doc = {}
+
+    for section_name, section_content in sections.items():
+        model = tf_idf_corpus[f'{section_name}_model']
+
+        filtered_content = []
+
+        for text in section_content:
+            filtered_text = " ".join([word.strip() if word.strip() not in stop_words else "" for word in text.split()])
+            digits = r'[aA-zZ]*\d+[aA-zZ]*'
+            months = r' jan | january| feb | february| mar | march | april| jun | june| july| jul | aug | august| sep | september| oct | october| nov | november| dec | december'
+            filtered_text = re.sub(digits, "", filtered_text.lower())
+            filtered_text = re.sub(months, "", filtered_text.lower())
+            filtered_content.append(" ".join(filtered_text.split()))
+
+        try:
+            vector = model.transform([" ".join(filtered_content)])
+            vectorized_doc[f"{section_name}_matrix"] = vector
+
+        except:
+            vectorized_doc[f'{section_name}_matrix'] = []
+            print(f"Empty vocabulary, probably because the entire corpus is missing a section [{section_name}]; empty list set as value for [{section_name}]")
+
+    return vectorized_doc
+
 
 def tf_idf_func(corpus:dict, analyzer:str) -> dict:
 
@@ -8,12 +35,12 @@ def tf_idf_func(corpus:dict, analyzer:str) -> dict:
 
     filtered_corpus = {}
 
-    for section, content in deep_copy.items():
+    for section_name, content in deep_copy.items():
 
         if analyzer == 'char_wb':
             vectorizer = TfidfVectorizer(analyzer='char_wb', ngram_range=(1,4), min_df=0.01, max_df=0.5, sublinear_tf=True)
         elif analyzer == 'char':
-            vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 6), min_df=0.01, max_df=0.5, sublinear_tf=True)
+            vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(1, 3), min_df=0.01, max_df=0.5, sublinear_tf=True)
         elif analyzer == 'word':
             vectorizer = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0.01, max_df=0.5, sublinear_tf=True)
         else:
@@ -29,17 +56,17 @@ def tf_idf_func(corpus:dict, analyzer:str) -> dict:
             filtered_text = re.sub(months, "", filtered_text.lower())
             filtered_content.append(" ".join(filtered_text.split()))
 
-        filtered_corpus[section] = filtered_content
-
-        filtered_corpus[f'{section}_model'] = vectorizer
+        filtered_corpus[section_name] = filtered_content
 
         try:
             vectorizer.fit(filtered_content)
-            filtered_corpus[f'{section}_matrix'] = vectorizer.transform(filtered_content)
+            filtered_corpus[f'{section_name}_model'] = vectorizer
+            filtered_corpus[f'{section_name}_matrix'] = vectorizer.transform(filtered_content)
 
         except ValueError:
-            filtered_corpus[f'{section}_matrix'] = []
-            print(f"Empty vocabulary, probably because the entire corpus is missing a section [{section}]; empty list set as value for [{section}]")
+            filtered_corpus[f'{section_name}_matrix'] = []
+            filtered_corpus[f'{section_name}_model'] = []
+            print(f"Empty vocabulary, probably because the entire corpus is missing a section [{section_name}]; empty list set as value for [{section_name}]")
 
     return filtered_corpus
 

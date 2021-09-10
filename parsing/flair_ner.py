@@ -2,7 +2,7 @@ from flair.data import Sentence
 
 def _extract_persons(text, tagger):
 
-    text = " ".join(text.strip().split()[:30])
+    text = " ".join(text.strip().split()[:50])
 
     sentence = Sentence(text)
 
@@ -28,7 +28,6 @@ def _extract_persons(text, tagger):
 def _extract_edu(section, tagger):
 
     edu = []
-    dates = []
 
     for sent in section:
 
@@ -44,10 +43,14 @@ def _extract_edu(section, tagger):
             if '<S-ORG>' in chunk or '<S-DATE>' in chunk:
                 edu.append((chunks[i - 1], chunks[i]))
             elif '<B-ORG>' in chunk or '<M-ORG>' in chunk or ('<B-DATE>' in chunk or '<M-DATE>' in chunk):
-                edu_parts.append((chunks[i-1], chunks[i]))
-            elif '<E-DATE>' in chunk or '<E-ORG>' in chunk:
+                j = i
                 edu_parts.append(chunks[i - 1])
+                while (j < len(chunks)) and ('<E-' not in chunks[j]) and ('<S-' not in chunks[j]):
+                    if ('<B-' not in chunks[j]) and ('<I-' not in chunks[j]):
+                        edu_parts.append(chunks[j])
+                    j += 1
+            elif '<E-DATE>' in chunk or '<E-ORG>' in chunk:
                 edu.append((" ".join(edu_parts), chunks[i]))
                 edu_parts = []
 
-    return (edu, dates)
+    return edu
