@@ -65,8 +65,15 @@ There is three part:
 
 
 ## Examples
+**Extraction Information**
+<img width = '2000' scr = ''>
+
+**Resume Matching**
+<img width = '2000' scr = ''>
 
 
+**Resume Matching with upload file**
+<img width = '2000' scr = ''>
 
 ## Authors
 
