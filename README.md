@@ -91,6 +91,9 @@ There is three part:
 <img height="32" width="32" src="https://image.flaticon.com/icons/png/512/25/25231.png" />
 <img height="32" width="32" src='https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png'>
 <img height="32" width="32" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/jupyter-notebook/jupyter-notebook.png" />
-
+<img height="32" width="32" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1280px-Scikit_learn_logo_small.svg.png" />
+<img height="32" width="32" src="https://media-exp3.licdn.com/dms/image/C4D0BAQEA_8lZLUHyww/company-logo_200_200/0/1586263619650?e=2159024400&v=beta&t=vP2ulubqaSF7FkDudqaPDGqxZqlnsQa0ooaduT_VZjQ" />
+<img height="32" width="32" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2QBYBpWFe-4E3moGldWvlQ5XdAcEBnPTj2zJRMfpmODTlOPb_PVCz8wohqGPtNY7lYjY&usqp=CAU" />
+  
  </p>
 
