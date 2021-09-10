@@ -67,7 +67,7 @@ There is three part:
 
 ## Examples
 **Extraction Information**
-<img width = '2000' scr = ''>
+<img width = '2000' scr = /images/extr.gif>
 
 **Resume Matching**
 <img width = '2000' scr = ''>
