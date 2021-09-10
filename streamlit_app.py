@@ -41,8 +41,10 @@ with expander_extracting:
     if tickbox_3 and documents[doc_index]['infos']['phone_numbers']:
         ee_0_box_3.write([documents[doc_index]['infos']['phone_numbers'][0]])
 
-    if tickbox_4 and documents_sample[doc_index]['infos']['curriculum']:
+    if doc_index < 100 and tickbox_4 and documents_sample[doc_index]['infos']['curriculum']:
         ee_0_box_4.write(documents_sample[doc_index]['infos']['curriculum'])
+    else:
+        ee_0_box_4.write("This beta feature only works for the first 100 documents")
 
     ee_1_box_5, ee_1_box_6, ee_1_box_7, ee_1_box_8 = st.columns((1,1,1,1))
 
