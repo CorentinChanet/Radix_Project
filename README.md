@@ -23,7 +23,9 @@ group assignment: Radix Project</h3>
 
 ## Description
 
-BLABLBLA
+We developed a program for Radix. The purpose of this project it's to use AI to help the recruitment. The AI will make the process more faster and easier.
+Examples: You need a specific employees working as engineer. The AI will passe every Resume he has.. and will show a Resume who looks the most as the one you need. 
+
 
 ## Installation
 Here you can Download the PDF and DOCX files : https://github.com/arefinnomi/curriculum_vitae_data
@@ -37,7 +39,11 @@ pip install [required library]
 ```
 
 ## Usage
-
+To start the program, you just need to go to the terminal and write this :
+```
+streamlit run streamlit_app.py
+```
+partis à continuer
 
 ## Output
 
