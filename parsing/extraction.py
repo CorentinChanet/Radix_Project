@@ -1,8 +1,8 @@
 import re
 from enum import Enum
 import joblib
-from Radix_Project.parsing.flair_ner import _extract_persons, _extract_edu
-tagger = joblib.load("../NLP-resume/processing/ner_onto_large.pkl")
+#from Radix_Project.parsing.flair_ner import _extract_persons, _extract_edu
+#tagger = joblib.load("../NLP-resume/processing/ner_onto_large.pkl")
 
 class RegxSections(Enum):
     work_exp = r'((teaching|exp.{3,4}nce|employment|work|working|career|job.?|professional|organizational|industr.{1,3}|previous.{0,2}|present.{0,2}|current.{0,2}|detail.{0,2})' \
@@ -18,7 +18,8 @@ class RegxSections(Enum):
 
 class RegxInfos(Enum):
     email_addresses = r'[\w.+-]+@[\w-]+\.[\w.-]+'
-    phone_numbers = r"((?:\+\d{2}[-\.\s]??|\d{4}[-\.\s]??)?(?:\d{3,4}[-\.\s]??\d{3,4}[-\.\s]??\d{4}|\(\d{3,4}\)\s*\d{3,4}[-\.\s]??\d{4}|\d{3,4}[-\.\s]??\d{4}))"
+    #phone_numbers = r"[:\s]((?:\+\d{2}[-\.\s]??|\d{4}[-\.\s]??)?(?:\d{3,4}[-\.\s]??\d{3,4}[-\.\s]??\d{4}|\(\d{3,4}\)\s*\d{3,4}[-\.\s]??\d{4}|\d{3,4}[-\.\s]??\d{4}))"
+    phone_numbers = r"(?<![aA-zZ\d])(\+?\d{2}[-\.\s]?[-\d\s\.]{9,20}(?![aA-zZ\d]))"
 
 def _get_sections(text:str, regexes):
     sections = {pattern.name:[] for pattern in regexes}
@@ -46,8 +47,8 @@ def _get_infos(text:str, regexes):
 
     return infos
 
-def _parse_name(text:str, tagger):
-    return _extract_persons(text, tagger)
+# def _parse_name(text:str, tagger):
+#     return _extract_persons(text, tagger)
 
 def parsing_documents(n, Sections, Infos):
     documents = {i:{} for i in range(1,n+1,1)}
@@ -66,10 +67,13 @@ def parsing_documents(n, Sections, Infos):
         #     documents[i]['infos']['curriculum'] = _extract_edu(documents[i]['sections']['education'], tagger)
         # else:
         #     documents[i]['infos']['curriculum'] = []
-        documents[i]['infos']['name'] = _extract_persons(txt, tagger)
+        # documents[i]['infos']['name'] = _extract_persons(txt, tagger)
         print(f'NER done on document {i}')
 
     return documents
+
+def parse_single_document(text:str, Sections, Infos):
+    return _get_sections(text, Sections)
 
 def create_corpus(documents:dict):
     corpus = {pattern.name:[] for pattern in RegxSections}

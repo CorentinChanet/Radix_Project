@@ -45,7 +45,7 @@ def _extract_edu(section, tagger):
             elif '<B-ORG>' in chunk or '<M-ORG>' in chunk or ('<B-DATE>' in chunk or '<M-DATE>' in chunk):
                 j = i
                 edu_parts.append(chunks[i - 1])
-                while (j < len(chunks)) and ('<' not in chunks[j]) and ('<S-' not in chunks[j]):
+                while (j < len(chunks)) and ('<E-' not in chunks[j]) and ('<S-' not in chunks[j]):
                     if ('<B-' not in chunks[j]) and ('<I-' not in chunks[j]):
                         edu_parts.append(chunks[j])
                     j += 1

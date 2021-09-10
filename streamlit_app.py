@@ -1,16 +1,20 @@
 import streamlit as st
-import pandas as pd
 from sklearn.metrics.pairwise import linear_kernel
 import joblib
+from parsing.pdf_to_txt import convert_single
+from parsing.extraction import parse_single_document
+from parsing.extraction import RegxSections, RegxInfos
+from matching.tf_idf_embeddings import vectorizer_document
 
 
 st.set_page_config(layout="wide")
 expander_extracting = st.expander("Information Extraction", expanded=False)
 
+
 with expander_extracting:
 
-    documents = joblib.load("resources/documents.pkl")
-    documents_sample = joblib.load("resources/documents_sample.pkl")
+    documents = joblib.load("resources/documents_full_v3.pkl")
+    documents_sample = joblib.load("resources/documents_sample_v2.pkl")
 
     ee_0_left, ee_0_center, ee_0_right = st.columns((0.1, 1, 2))
 
@@ -37,7 +41,7 @@ with expander_extracting:
         ee_0_box_3.write([documents[doc_index]['infos']['phone_numbers'][0]])
 
     if tickbox_4 and documents_sample[doc_index]['infos']['curriculum']:
-        ee_0_box_3.write(documents_sample[doc_index]['infos']['curriculum'])
+        ee_0_box_4.write(documents_sample[doc_index]['infos']['curriculum'])
 
     ee_1_box_5, ee_1_box_6, ee_1_box_7, ee_1_box_8 = st.columns((1,1,1,1))
 
@@ -57,6 +61,9 @@ with expander_extracting:
 
     if tickbox_8 and documents[doc_index]['sections']['hobbies']:
         ee_1_box_8.write(documents[doc_index]['sections']['hobbies'])
+
+
+
 
 expander_matching = st.expander("Resume matching (from dataset)", expanded=False)
 
@@ -99,6 +106,9 @@ with expander_matching:
         else:
             em_1_left.write("No section found")
 
+
+
+
 expander_matching_external = st.expander("Resume matching (upload file)", expanded=False)
 
 with expander_matching_external:
@@ -109,15 +119,40 @@ with expander_matching_external:
         section_ext = st.selectbox("Select Section", ('work_exp',
                                                   'education',
                                                   'skills'), key="Select Section external")
-    with em_0_center:
-        document_ext = st.file_uploader('Drop your pdf file here', type='.pdf', key="Drop external")
 
-    with em_0_right:
-        vectorizer = st.selectbox("Select Vectorizer", ('char',
+    with em_0_center:
+        analyzer_name = st.selectbox("Select Analyzer", ('char',
                                                   'word'), key='Vectorizer external')
 
-    with em_0_left:
-        search_ext = st.checkbox('Search', key="Search external")
+    em_1_left, em_1_center, em_1_right = st.columns((0.2, 1, 1))
+
+    with em_0_right:
+        uploaded_pdf = st.file_uploader('Drop your pdf file here', type='.pdf', key="Drop external")
+
+        if uploaded_pdf is not None:
+            tf_idf_corpus = joblib.load(f"resources/tf_idf_corpus_{analyzer_name}.pkl")
+            doc = convert_single(uploaded_pdf)
+            parsed_doc = parse_single_document(doc, RegxSections, RegxInfos)
+
+            em_1_center.write(parsed_doc[section_ext])
+
+            slider_ext = em_0_center.slider("Choose which resume to compare", min_value=0, max_value=9, value=0)
+
+            try:
+                vectorized_doc = vectorizer_document(parsed_doc, tf_idf_corpus=tf_idf_corpus)
+
+                cosine_similarities = linear_kernel(vectorized_doc[f'{section_ext}_matrix'][0],
+                                                    tf_idf_corpus[f'{section_ext}_matrix']).flatten()
+
+                ranking = cosine_similarities.argsort()[:-11:-1] + 1
+
+                em_1_left.write(list(ranking))
+
+                em_1_right.write(documents[ranking[slider_ext]]['sections'][section_ext])
+
+            except ValueError:
+                st.write("This document was not recognized as a resume. Try with another document.")
+
 
     em_1_left, em_1_center, em_1_right = st.columns((0.2, 1, 1))
 
