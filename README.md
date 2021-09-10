@@ -16,7 +16,6 @@ Radix Project</h3>
 [Description](#Description)  
 [Installation](#Installation)  
 [Usage](#Usage)  
-[Output](#Output)  
 [How it works](#How-it-works)  
 [Examples](#Examples)  
 [Authors](#Authors) 
