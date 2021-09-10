@@ -170,7 +170,7 @@ with expander_matching_external:
                 em_1_left.subheader('Ranking')
                 em_1_left.write(list(ranking))
 
-                em_1_right.subheader(f'{scores[slider_ext]}th best match')
+                em_1_right.subheader(f'{scores[slider_ext]} best match')
                 em_1_right.write(documents[ranking[slider_ext]]['sections'][section_ext])
 
             except ValueError:
