@@ -26,11 +26,13 @@ group assignment: Radix Project</h3>
 We developed a program for Radix. The purpose of this project it's to use AI to help the recruitment. The AI will make the process more faster and easier.
 Examples: You need a specific employees working as engineer. The AI will passe every Resume he has.. and will show a Resume who looks the most as the one you need. 
 
+Also we use the Dataset from Kaagle. 
+Here you can Download the PDF and DOCX files : https://github.com/arefinnomi/curriculum_vitae_data 
+
 Below you find the whole explanation, from the installation up to a glance behind the scenes.
 
 
 ## Installation
-Here you can Download the PDF and DOCX files : https://github.com/arefinnomi/curriculum_vitae_data
 1. Clone the repository:
 ```
 git clone https://github.com/Misterkadrix/Radix_Project.git
@@ -51,9 +53,9 @@ streamlit run streamlit_app.py
 ## Output
 
 There is three part:
-1. It will extract the data from the resume
-2. It will make a match between the Resume we provide and the ones we got on our dataset
-3. It will make a match between the Resume you provide (by a uploading way) and the ones we got on our dataset
+1. Information Extraction : It will extract the data from the resume as the Name,Emailn,etc..
+2. Resume Matching : It will make a match between the Resume we provide and the ones we got on our dataset
+3. Resume Mathcing : It will make a match between the Resume you provide (by a uploading way) and the ones we got on our dataset
 
 
 
@@ -61,7 +63,9 @@ There is three part:
 
 
 
+
 ## Examples
+
 
 
 ## Authors
