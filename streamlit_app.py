@@ -107,7 +107,7 @@ with expander_matching:
     if search:
         tf_idf_corpus = joblib.load(f"resources/tf_idf_corpus_{vectorizer}.pkl")
 
-        slider = em_0_center.slider("Choose which resume to compare", min_value=0, max_value=9, value=0)
+        slider = em_0_center.slider("Choose rank", min_value=0, max_value=9, value=0)
 
         if tf_idf_corpus[section][document_number-1]:
 
@@ -157,7 +157,7 @@ with expander_matching_external:
             em_1_center.subheader('Uploaded file')
             em_1_center.write(parsed_doc[section_ext])
 
-            slider_ext = em_0_center.slider("Choose which resume to compare", min_value=0, max_value=9, value=0, key="slider_ext")
+            slider_ext = em_0_center.slider("Choose rank", min_value=0, max_value=9, value=0, key="slider_ext")
 
             try:
                 vectorized_doc = vectorizer_document(parsed_doc, tf_idf_corpus=tf_idf_corpus)
